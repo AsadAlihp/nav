@@ -21,17 +21,17 @@ import {
 } from 'react-navigation';
 
 const App = createStackNavigator({
-  HomeScreen: { screen: HomeScreen },
+
   EntryPage: { screen: EntryPage },
   LoginPage: { screen: LoginPage },
   SignUp: { screen: SignUp },
-
+  HomeScreen: { screen: HomeScreen },
   Trending: { screen: Trending },
   AllTimeHits: { screen: AllTimeHits },
   ForgotPass: { screen: ForgotPass },
   HomeScreenGuest: { screen: HomeScreenGuest },
 
-  // 
+  //
   // Cardss: { screen: Cardss },
   // CardssTrend: { screen: CardssTrend },
   // CardssHits: { screen: CardssHits },

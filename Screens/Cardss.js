@@ -8,7 +8,7 @@ export default class Cardss extends Component<Props> {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Welcome to WhatsPoetry!</Text>
-        <Text style={styles.instructions}>Timeline goes here...</Text> 
+        <Text style={styles.instructions}>Timeline goes here done by me...</Text> 
 
 
       </View>
