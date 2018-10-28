@@ -7,7 +7,16 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, StatusBar,TouchableOpacity} from 'react-native';
+import {Platform,
+  StyleSheet,
+  Text,
+  View,
+  StatusBar,
+  TouchableOpacity,
+  ScrollView,
+  Keyboard,
+  KeyboardAvoidingView,
+  } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -43,8 +52,26 @@ export default class App extends Component<Props> {
    this.state = {
      firstname: '',
      isloading:false,
+     hidelogo:false,
      secureTextEntry: true,
    };
+ }
+ componentDidMount () {
+   this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+   this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+ }
+
+ componentWillUnmount () {
+   this.keyboardDidShowListener.remove();
+   this.keyboardDidHideListener.remove();
+ }
+
+ _keyboardDidShow = ()=> {
+   this.setState({hidelogo:true});
+ }
+
+ _keyboardDidHide = ()=> {
+   this.setState({hidelogo:false});
  }
 
      onFocus() {
@@ -138,16 +165,20 @@ export default class App extends Component<Props> {
          backgroundColor="#ff5e62"
          barStyle="light-content"
        />
-      <LinearGradient colors={['#ff5e62',  '#ff9966']} style={{flex:1,width:'100%'}}>
+      <LinearGradient colors={['#ff5e62',  '#ff9966']} style={{justifyContent:'center',flex:1,width:'100%'}}>
 
 
-
+{!this.state.hidelogo?
       <View style={{alignItems:'center',marginTop:30,justifyContent:'center',flex:1}}>
           <Entypo name="documents" size={120}  color="#fff" />
           <Text style={{fontSize:35,color:'white',  fontFamily:'cochin'}}>WhatsPoetry</Text>
       </View>
+      :null}
 
-      <View style={{flex:1,padding:20}}>
+
+<View style={{flex:1}}>
+
+      <View style={{ justifyContent:'flex-end', paddingLeft:20,paddingRight:20}}>
       <TextField
            ref={this.firstnameRef}
            value={data.firstname}
@@ -164,7 +195,6 @@ export default class App extends Component<Props> {
            label='User name'
            error={errors.firstname}
          />
-<View>
          <TextField
             ref={this.passwordRef}
             value={data.password}
@@ -187,70 +217,72 @@ export default class App extends Component<Props> {
             characterRestriction={20}
             renderAccessory={this.renderPasswordAccessory}
           />
-      </View></View>
 
-      <View style={{justifyContent:'center',alignItems:'center'}} >
-      <TouchableOpacity onPress={() =>
-        navigate('ForgotPass', { propps: 'Guest prop' })
-      }>
-        <Text style={{color:'white',marginBottom:30}}> Forgot Password? </Text>
-        </TouchableOpacity>
-      <Button
-          title="LOGIN"
-          loading={this.state.isloading}
-          loadingProps={{ size: "large", color: "rgba(111, 202, 186, 1)" }}
-          titleStyle={{ fontWeight: "700" }}
-          onPress={() =>
-            this.onSubmit()
-          }
-          buttonStyle={{
-            backgroundColor: "transparent",
-            width: 300,
-            height: 45,
-            borderColor: "white",
-            borderWidth: 1,
-            borderRadius: 5
-          }}
-          containerStyle={{ marginTop: 20 }}
-        />
-        <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',height:100,width:'100%'}}>
-        <View style={{justifyContent:'center',height:'100%'}}>
-        <TouchableOpacity onPress={() =>
-          navigate('HomeScreenGuest', { propps: 'Guest prop' })
-        }>
-          <Text
-            style={{color:'white'}}>LOGIN AS GUEST </Text>
-            </TouchableOpacity>
-        </View>
+      </View> 
+  </View>
 
+        <View style={{justifyContent:'center',width:'100%', alignItems:'center'}} >
+            <TouchableOpacity onPress={() =>
+              navigate('ForgotPass', { propps: 'Guest prop' })
+            }>
+              <Text style={{color:'white',marginBottom:30}}> Forgot Password? </Text>
+              </TouchableOpacity>
           <Button
-              title="SIGN UP"
+              title="LOGIN"
               loading={this.state.isloading}
               loadingProps={{ size: "large", color: "rgba(111, 202, 186, 1)" }}
               titleStyle={{ fontWeight: "700" }}
               onPress={() =>
-                navigate('SignUp', { propps: 'sign up prop' })
+                this.onSubmit()
               }
               buttonStyle={{
-                backgroundColor: "#ff5e62",
-                height: 30,
-
-                borderColor: "transparent",
-                marginRight:0,
+                backgroundColor: "transparent",
+                width: 300,
+                height: 45,
+                borderColor: "white",
                 borderWidth: 1,
                 borderRadius: 5
               }}
               containerStyle={{ marginTop: 20 }}
             />
+          <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',height:100,width:'100%'}}>
+          <View style={{justifyContent:'center',height:'100%'}}>
+          <TouchableOpacity onPress={() =>
+            navigate('HomeScreenGuest', { propps: 'Guest prop' })
+          }>
+            <Text
+              style={{color:'white'}}>LOGIN AS GUEST </Text>
+              </TouchableOpacity>
+          </View>
+
+            <Button
+                title="SIGN UP"
+                loading={this.state.isloading}
+                loadingProps={{ size: "large", color: "rgba(111, 202, 186, 1)" }}
+                titleStyle={{ fontWeight: "700" }}
+                onPress={() =>
+                  navigate('SignUp', { propps: 'sign up prop' })
+                }
+                buttonStyle={{
+                  backgroundColor: "#ff5e62",
+                  height: 30,
+
+                  borderColor: "transparent",
+                  marginRight:0,
+                  borderWidth: 1,
+                  borderRadius: 5
+                }}
+                containerStyle={{ marginTop: 20 }}
+              />
+          </View>
+
+
         </View>
 
-
-      </View>
-
-
-
-
       </LinearGradient>
+
+
+
       </View>
     );
   }

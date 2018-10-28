@@ -172,9 +172,9 @@ export default class App extends Component<Props> {
           <Entypo name="documents" size={50}  color="#fff" />
           <Text style={{fontSize:20,color:'white',  fontFamily:'cochin'}}>WhatsPoetry</Text>
       </View>
-
+<ScrollView>
       <View style={{flex:1,padding:20}}>
-      <ScrollView>
+
       <TextField
                 ref={this.firstnameRef}
                 autoCorrect={false}
@@ -254,8 +254,9 @@ export default class App extends Component<Props> {
                 characterRestriction={20}
                 renderAccessory={this.renderPasswordAccessory}
               />
-              </ScrollView>
+
     </View>
+  </ScrollView>
 
       <View style={{justifyContent:'center',marginBottom:20,alignItems:'center'}} >
 
